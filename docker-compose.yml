@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  web:
+    image: php:apache  # Using the official PHP image with Apache
+    ports:
+      - "8088:80"
+    volumes:
+      - ./website:/var/www/html  # Mount the local './website' directory into the container
+    networks:
+      - mynetwork
+    environment:
+      MYSQL_HOST: db  # Use the service name as the MySQL host
+      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+
+  db:
+    image: mysql:latest  # Using the latest MySQL image
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
